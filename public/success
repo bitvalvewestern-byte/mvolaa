@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Succès - QuickCash</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600;700;800&display=swap');
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Albert Sans', sans-serif;
+            background: linear-gradient(135deg, #003366 0%, #00509e 100%);
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .success-container {
+            width: 100%;
+            max-width: 420px;
+            background: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: slideUp 0.5s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        /* Decorative top accent */
+        
+        .success-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(to right, #FCD116, #f4d03f, #FCD116);
+        }
+        /* Success Icon */
+        
+        .success-icon-wrapper {
+            width: 90px;
+            height: 90px;
+            background-color: #e6f7ee;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 25px auto;
+            position: relative;
+            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.2s both;
+        }
+        
+        @keyframes popIn {
+            0% {
+                transform: scale(0);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        .success-icon-wrapper svg {
+            width: 45px;
+            height: 45px;
+            stroke: #28a745;
+            stroke-width: 3.5;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        /* Ripple effect rings */
+        
+        .ripple {
+            position: absolute;
+            border: 2px solid rgba(40, 167, 69, 0.2);
+            border-radius: 50%;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            animation: ripple 2s infinite ease-out;
+        }
+        
+        .ripple:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+        
+        @keyframes ripple {
+            0% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(2.2);
+                opacity: 0;
+            }
+        }
+        
+        h1 {
+            font-size: 26px;
+            font-weight: 800;
+            color: #003366;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 15px;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 30px;
+            padding: 0 10px;
+        }
+        /* Summary Box */
+        
+        .summary-box {
+            background-color: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 14px;
+            padding: 20px;
+            text-align: left;
+            margin-bottom: 30px;
+        }
+        
+        .summary-box h3 {
+            font-size: 13px;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px dashed #e0e0e0;
+            font-size: 15px;
+        }
+        
+        .summary-row:last-child {
+            border-bottom: none;
+        }
+        
+        .summary-label {
+            color: #666;
+            font-weight: 500;
+        }
+        
+        .summary-value {
+            color: #003366;
+            font-weight: 700;
+            text-align: right;
+            max-width: 60%;
+            word-break: break-word;
+        }
+        /* Action Buttons */
+        
+        .btn-primary {
+            display: block;
+            width: 100%;
+            background-color: #003366;
+            color: #ffffff;
+            padding: 16px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 700;
+            transition: background-color 0.2s, transform 0.2s;
+            margin-bottom: 15px;
+            border: none;
+            cursor: pointer;
+            font-family: 'Albert Sans', sans-serif;
+        }
+        
+        .btn-primary:hover {
+            background-color: #002244;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            display: block;
+            width: 100%;
+            background-color: transparent;
+            color: #003366;
+            padding: 16px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            border: 2px solid #e0e0e0;
+            transition: border-color 0.2s, background-color 0.2s;
+            cursor: pointer;
+            font-family: 'Albert Sans', sans-serif;
+        }
+        
+        .btn-secondary:hover {
+            border-color: #003366;
+            background-color: #f0f4f8;
+        }
+        /* Confetti particles */
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #FCD116;
+            opacity: 0.8;
+            top: -10px;
+            border-radius: 2px;
+            animation: fall 3s linear infinite;
+        }
+        
+        .confetti:nth-child(2) {
+            left: 20%;
+            animation-delay: 0s;
+            background-color: #4A90E2;
+        }
+        
+        .confetti:nth-child(3) {
+            left: 50%;
+            animation-delay: 0.5s;
+            background-color: #28a745;
+        }
+        
+        .confetti:nth-child(4) {
+            left: 80%;
+            animation-delay: 1s;
+            background-color: #FCD116;
+        }
+        
+        .confetti:nth-child(5) {
+            left: 10%;
+            animation-delay: 1.5s;
+            background-color: #d21034;
+        }
+        
+        .confetti:nth-child(6) {
+            left: 90%;
+            animation-delay: 2s;
+            background-color: #4A90E2;
+        }
+        
+        @keyframes fall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(600px) rotate(720deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="success-container">
+        <!-- Confetti Particles -->
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+
+        <!-- Success Icon -->
+        <div class="success-icon-wrapper">
+            <div class="ripple"></div>
+            <div class="ripple"></div>
+            <svg viewBox="0 0 24 24">
+                <path d="M20 6L9 17l-5-5" />
+            </svg>
+        </div>
+
+        <!-- Messages -->
+        <h1>Félicitations !</h1>
+        <p class="subtitle">
+            Votre demande de prêt a été approuvée avec succès. Voici un récapitulatif de votre dossier.
+        </p>
+
+        <!-- Summary Box -->
+        <div class="summary-box">
+            <h3>Récapitulatif du Prêt</h3>
+            <div class="summary-row">
+                <span class="summary-label">Nom Complet:</span>
+                <span class="summary-value" id="finalName">-</span>
+            </div>
+            <div class="summary-row">
+                <span class="summary-label">Téléphone:</span>
+                <span class="summary-value" id="finalPhone">-</span>
+            </div>
+            <div class="summary-row">
+                <span class="summary-label">Montant Approuvé:</span>
+                <span class="summary-value" id="finalAmount">-</span>
+            </div>
+            <div class="summary-row">
+                <span class="summary-label">Motif:</span>
+                <span class="summary-value" id="finalPurpose">-</span>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <button class="btn-primary" onclick="goToDashboard()">Accéder à mon Espace</button>
+        <a href="index.html" class="btn-secondary">Retour à l'accueil</a>
+
+    </div>
+
+    <!-- Script to populate data and handle actions -->
+    <script>
+        // --- 1. Retrieve and Display Data ---
+        const savedData = localStorage.getItem('loanApplication');
+
+        if (savedData) {
+            const data = JSON.parse(savedData);
+
+            // Populate Name
+            document.getElementById('finalName').textContent = data.fullName || 'Non spécifié';
+
+            // Populate Phone
+            const phone = data.phone ? `+261 ${data.phone}` : 'Non spécifié';
+            document.getElementById('finalPhone').textContent = phone;
+
+            // Populate Amount
+            const amount = data.amount ? parseInt(data.amount).toLocaleString('fr-FR') + ' Ar' : 'Non spécifié';
+            document.getElementById('finalAmount').textContent = amount;
+
+            // Populate Purpose
+            const purposeMap = {
+                'business': 'Business / Commerce',
+                'education': 'Éducation / Scolarité',
+                'medical': 'Frais Médicaux',
+                'agriculture': 'Agriculture',
+                'personal': 'Dépenses Personnelles',
+                'other': 'Autre'
+            };
+            document.getElementById('finalPurpose').textContent = purposeMap[data.purpose] || data.purpose || 'Non spécifié';
+        } else {
+            // Fallback if no data is found
+            document.getElementById('finalName').textContent = 'Client';
+            document.getElementById('finalPhone').textContent = 'Non spécifié';
+            document.getElementById('finalAmount').textContent = 'Non spécifié';
+            document.getElementById('finalPurpose').textContent = 'Non spécifié';
+        }
+
+        // --- 2. Handle Dashboard Button ---
+        function goToDashboard() {
+            // Clear the application data since it's been processed
+            // localStorage.removeItem('loanApplication');
+            // localStorage.removeItem('userPhone');
+            // localStorage.removeItem('enteredOTP');
+
+            // In a real app, this would go to a dashboard. For now, redirect to index.
+            window.location.href = "index.html";
+        }
+    </script>
+
+</body>
+
+</html>
